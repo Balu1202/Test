@@ -1,0 +1,25 @@
+{
+	"name": "CopyJob",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyActivity",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 3,
+				"startTime": "2021-08-04T09:37:00Z",
+				"endTime": "2021-08-05T09:59:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

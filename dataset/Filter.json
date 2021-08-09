@@ -1,0 +1,25 @@
+{
+	"name": "Filter",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobLink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "CricOutput.csv",
+				"folderPath": "Cricket",
+				"container": "cont001"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

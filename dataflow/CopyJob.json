@@ -1,0 +1,28 @@
+{
+	"name": "CopyJob",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "CopyBlob",
+						"type": "DatasetReference"
+					},
+					"name": "BlobCSv"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "CopyB2B",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> BlobCSv\nBlobCSv sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+		}
+	}
+}

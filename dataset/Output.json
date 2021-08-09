@@ -1,0 +1,27 @@
+{
+	"name": "Output",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobLink",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Folder": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().Folder",
+					"type": "Expression"
+				},
+				"container": "cont001"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

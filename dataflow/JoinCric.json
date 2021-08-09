@@ -1,0 +1,39 @@
+{
+	"name": "JoinCric",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Emp",
+						"type": "DatasetReference"
+					},
+					"name": "Cric"
+				},
+				{
+					"dataset": {
+						"referenceName": "Cont",
+						"type": "DatasetReference"
+					},
+					"name": "Country"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Joinmap",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JoinCriccin"
+				}
+			],
+			"script": "source(output(\n\t\tplayername as string,\n\t\ttype as string,\n\t\tcountry as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Cric\nsource(output(\n\t\tcountry as string,\n\t\t{ sports} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Country\nCric, Country join(Cric@country == Country@country,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinCriccin\nJoinCriccin sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['CricOutput.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tmapColumn(\n\t\tPlayerName = playername,\n\t\tEmpType = type,\n\t\tCountry = Cric@country,\n\t\t{ Sports} = { sports}\n\t),\n\tpartitionBy('hash', 1)) ~> sink1"
+		}
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"name": "AggriJoin",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Employee",
+						"type": "DatasetReference"
+					},
+					"name": "Empolyee"
+				},
+				{
+					"dataset": {
+						"referenceName": "department",
+						"type": "DatasetReference"
+					},
+					"name": "Dept"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "outemp",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "EmpAggri"
+				},
+				{
+					"name": "Join1"
+				}
+			],
+			"script": "source(output(\n\t\tempid as short,\n\t\tname as string,\n\t\tcountry as string,\n\t\tdepartment as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Empolyee\nsource(output(\n\t\tdepid as short,\n\t\tdepname as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Dept\nEmpolyee aggregate(groupBy(department),\n\tTotalEmployee = count(empid)) ~> EmpAggri\nEmpAggri, Dept join(department == depid,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['empdept.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1"
+		}
+	}
+}
