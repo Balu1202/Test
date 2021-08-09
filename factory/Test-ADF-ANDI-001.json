@@ -1,0 +1,9 @@
+{
+	"name": "Test-ADF-ANDI-001",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f6753473-3c05-4d9f-ae66-9776db16ea3f",
+		"tenantId": "7a2ee4b9-310a-4c6f-a4cd-a51ce0dc8d61"
+	}
+}
